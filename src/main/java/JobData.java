@@ -6,9 +6,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Collection;
+
 
 /**
  * Created by LaunchCode
@@ -43,7 +44,7 @@ public class JobData {
         }
 
         // Bonus mission: sort the results
-        Collections.sort(values);
+        //Collections.sort(values);
 
         return values;
     }
@@ -54,7 +55,8 @@ public class JobData {
         loadData();
 
         // Bonus mission; normal version returns allJobs
-        return new ArrayList<>(allJobs);
+        //return new ArrayList<>(allJobs);
+        return allJobs;
     }
 
     /**
@@ -77,9 +79,8 @@ public class JobData {
 
         for (HashMap<String, String> row : allJobs) {
 
-            String aValue = row.get(column);
-
-            if (aValue.contains(value)) {
+            String aValueOf = row.get(column);
+            if (aValueOf.toLowerCase().contains(value.toLowerCase())) {
                 jobs.add(row);
             }
         }
@@ -97,10 +98,29 @@ public class JobData {
 
         // load data, if not already loaded
         loadData();
+        Collection< String> valueOf;
+
+        ArrayList<HashMap<String, String>>
+                jobs = new ArrayList<>();
+
+        for (HashMap<String, String> row : allJobs) {
+            String upperValueOf = "(\n)";
+
+            valueOf = row.values();
+            for (String anObject : valueOf){
+                anObject = anObject.toUpperCase();
+                upperValueOf += anObject;
+            }
+
+            if (upperValueOf.contains(value.toUpperCase())) {
+                jobs.add(row);
+            }
+        }
 
         // TODO - implement this method
-        return null;
-    }
+     return jobs;
+}
+
 
     /**
      * Read in data from a CSV file and store it in a list
